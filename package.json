@@ -5,7 +5,9 @@
   "main": "index.js",
   "dependencies": {
     "d3": "^3.5.5",
+    "material-ui": "^0.7.5",
     "react": "^0.13.2",
+    "react-tap-event-plugin": "^0.1.6",
     "webpack": "^1.8.11"
   },
   "devDependencies": {
@@ -24,13 +26,17 @@
   },
   "scripts": {
     "test": "test",
-    "start": "webpack-dev-server --devtool eval --progress --colors --hot --content-base build",
+    "start": "webpack-dev-server --progress --hot",
     "build": "webpack"
   },
   "keywords": [
     "react",
     "d3"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:waynelkh/react-d3-pratice.git"
+  },
   "author": "wnlee",
   "license": "MIT"
 }

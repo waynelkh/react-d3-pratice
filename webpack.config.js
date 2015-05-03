@@ -1,4 +1,4 @@
-var Path = require('path');
+var path = require('path');
 var webpack = require('webpack');
 var WebpackNotifierPlugin = require('webpack-notifier');
 
@@ -6,10 +6,10 @@ module.exports = {
     entry: [
         'webpack-dev-server/client?http://localhost:8080',
         'webpack/hot/only-dev-server',
-        Path.resolve(__dirname, 'src/boot.jsx')
+        path.resolve(__dirname, 'src/boot.jsx')
     ],
     output: {
-        path: Path.resolve(__dirname, 'build'),
+        path: path.resolve(__dirname, 'build'),
         filename: 'bundle.js'
     },
     module: {
@@ -17,13 +17,16 @@ module.exports = {
         {
             test: /\.jsx$/,
             loaders: ['react-hot', 'babel'],
-            include: Path.join(__dirname, 'src/')
+            include: path.join(__dirname, 'src/')
         },
         {
             test: /\.css$/, loader: 'style!css'
         },
         {
-            test: /\.less$/, loader: 'style!css!less'
+            test: /\.less$/, loader: 'style!css!less',
+            include: [
+              path.resolve(__dirname, "src/"),
+            ]
         },
         {
             test: /\.(html|png)$/,
@@ -33,10 +36,28 @@ module.exports = {
             test: /\.(ttf|eot|png|jpg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
             loader: "url-loader?limit=8192"
         }
-        ]
+        ],
+        noParse: ['react', 'material-ui']
     },
+
     plugins: [
         new webpack.NoErrorsPlugin(),
-        new WebpackNotifierPlugin()
-    ]
+        new WebpackNotifierPlugin(),
+        new webpack.ProvidePlugin({ //load in every js so web don't require react
+            "React": 'react'
+        })
+    ],
+    devtool: "eval",
+    devServer: {
+        contentBase: "build",
+        noInfo: true,
+        stats: {
+            colors: true,
+            cached: false,
+            cachedAssets: false
+        },
+
+    },
+    progress: true
+
 };
